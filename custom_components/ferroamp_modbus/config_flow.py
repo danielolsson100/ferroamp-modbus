@@ -10,7 +10,15 @@ from homeassistant.config_entries import ConfigFlow, OptionsFlow
 from homeassistant.const import CONF_HOST, CONF_PORT
 from homeassistant.core import callback
 
-from .const import DEFAULT_HOST, DEFAULT_PORT, DOMAIN
+from .const import (
+    CONF_MAX_VALUE,
+    CONF_MIN_VALUE,
+    DEFAULT_HOST,
+    DEFAULT_PORT,
+    DOMAIN,
+    DEFAULT_MAX_VALUE,
+    DEFAULT_MIN_VALUE,
+)
 from .hub import FerroampModbusHub
 
 _LOGGER = logging.getLogger(__name__)
@@ -19,6 +27,8 @@ STEP_USER_DATA_SCHEMA = vol.Schema(
     {
         vol.Required(CONF_HOST, default=DEFAULT_HOST): str,
         vol.Required(CONF_PORT, default=DEFAULT_PORT): vol.Coerce(int),
+        vol.Required(CONF_MIN_VALUE, default=DEFAULT_MIN_VALUE): vol.Coerce(float),
+        vol.Required(CONF_MAX_VALUE, default=DEFAULT_MAX_VALUE): vol.Coerce(float),
     }
 )
 
@@ -72,7 +82,7 @@ class FerroampModbusOptionsFlow(OptionsFlow):
         self, user_input: dict[str, Any] | None = None
     ) -> dict:
         errors: dict[str, str] = {}
-        current = self.config_entry.data
+        current = {**self.config_entry.data, **self.config_entry.options}
 
         if user_input is not None:
             host = user_input[CONF_HOST]
@@ -93,6 +103,10 @@ class FerroampModbusOptionsFlow(OptionsFlow):
             {
                 vol.Required(CONF_HOST, default=current.get(CONF_HOST, DEFAULT_HOST)): str,
                 vol.Required(CONF_PORT, default=current.get(CONF_PORT, DEFAULT_PORT)): vol.Coerce(int),
+                vol.Required(CONF_MIN_VALUE, default=current.get(CONF_MIN_VALUE, DEFAULT_MIN_VALUE)):
+                    vol.Coerce(float),
+                vol.Required(CONF_MAX_VALUE, default=current.get(CONF_MAX_VALUE, DEFAULT_MAX_VALUE)):
+                    vol.Coerce(float),
             }
         )
         return self.async_show_form(step_id="init", data_schema=schema, errors=errors)

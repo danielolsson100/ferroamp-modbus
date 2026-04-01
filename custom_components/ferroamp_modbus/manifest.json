@@ -1,7 +1,7 @@
 {
   "domain": "ferroamp_modbus",
   "name": "Ferroamp Modbus",
-  "version": "0.0.1",
+  "version": "0.0.5",
   "config_flow": true,
   "documentation": "https://github.com/danielolsson100/ferroamp-modbus",
   "issue_tracker": "https://github.com/danielolsson100/ferroamp-modbus/issues",

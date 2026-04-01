@@ -13,6 +13,11 @@ DEFAULT_SCAN_INTERVAL = 30
 FAST_SCAN_INTERVAL = 5
 
 CONF_SCAN_INTERVAL = "scan_interval"
+CONF_MIN_VALUE = "min_value"
+CONF_MAX_VALUE = "max_value"
+
+DEFAULT_MIN_VALUE = -12000.0
+DEFAULT_MAX_VALUE = 12000.0
 
 # Register types
 REG_INPUT = "input"
@@ -39,6 +44,7 @@ class SensorDefinition:
     state_class: Optional[str] = None
     scan_interval: int = DEFAULT_SCAN_INTERVAL
     icon: Optional[str] = None
+    as_int: bool = False
 
 
 @dataclass
@@ -64,11 +70,12 @@ class NumberDefinition:
     apply_address: int  # address to write [1] to apply the change
     unit: str
     device_class: Optional[str] = None
-    min_value: float = -12000.0
-    max_value: float = 12000.0
+    min_value: float = DEFAULT_MIN_VALUE
+    max_value: float = DEFAULT_MAX_VALUE
     step: float = 1.0
     scan_interval: int = FAST_SCAN_INTERVAL
     icon: Optional[str] = None
+    as_int: bool = False
 
 
 # ---------------------------------------------------------------------------
@@ -296,6 +303,7 @@ SENSOR_DEFINITIONS: list[SensorDefinition] = [
         unit="kWh",
         device_class=SensorDeviceClass.ENERGY,
         state_class=SensorStateClass.TOTAL_INCREASING,
+        as_int=True,
     ),
     SensorDefinition(
         key="energy_imported_from_grid",
@@ -306,6 +314,7 @@ SENSOR_DEFINITIONS: list[SensorDefinition] = [
         unit="kWh",
         device_class=SensorDeviceClass.ENERGY,
         state_class=SensorStateClass.TOTAL_INCREASING,
+        as_int=True,
     ),
     SensorDefinition(
         key="grid_active_power",
@@ -672,6 +681,7 @@ NUMBER_DEFINITIONS: list[NumberDefinition] = [
         step=1.0,
         scan_interval=FAST_SCAN_INTERVAL,
         icon="mdi:transmission-tower-import",
+        as_int=True,
     ),
     NumberDefinition(
         key="export_threshold",
@@ -686,6 +696,7 @@ NUMBER_DEFINITIONS: list[NumberDefinition] = [
         step=1.0,
         scan_interval=FAST_SCAN_INTERVAL,
         icon="mdi:transmission-tower-export",
+        as_int=True,
     ),
 ]
 

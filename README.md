@@ -7,6 +7,8 @@
 A Home Assistant custom integration for the **Ferroamp Energy Hub** using Modbus TCP. Provides real-time monitoring of solar production, battery state, grid power, and control of battery mode and grid import/export limits.
 
 > **Prerequisite:** Modbus TCP must be enabled on your Ferroamp Energy Hub. If it is not, contact [Ferroamp support](https://ferroamp.com/contact/) to have it activated.
+> 
+> **Prerequisite:** The system's Operation Settings in portal.ferroamp.com must be set to "PEAK SHAVING".
 
 ---
 
@@ -84,8 +86,45 @@ A Home Assistant custom integration for the **Ferroamp Energy Hub** using Modbus
 
 | Entity | Unit | Range | Description |
 |--------|------|-------|-------------|
-| Import Threshold | W | −12 000 to 12 000 | Set the grid import power limit |
-| Export Threshold | W | −12 000 to 12 000 | Set the grid export power limit |
+| Import Threshold | W | Configurable to match house fuse | Set the grid import power limit |
+| Export Threshold | W | Configurable to match house fuse | Set the grid export power limit |
+
+### Example Use Cases
+
+1. Charging the EV while protecting the house fuse
+   - Set Import = -11000 and Export = 11000
+   - This forces the system to use battery energy for peak shaving and avoids blowing the house fuse.
+2. Use PV energy or store excess in the battery
+   - Set Import = 0 and Export = 0
+   - This allows the system to use only local generation and battery storage without drawing or exporting power.
+3. High electricity price while the sun is shining
+   - Set thresholds to sell excess PV energy and use battery power before importing from the grid.
+   - Example: Import = 0, Export = 11000.
+
+### Automation Example
+
+Use a Home Assistant automation to set import/export values with the number entities:
+
+```yaml
+alias: Set Ferroamp Import/Export Thresholds
+description: Set import/export thresholds for battery and PV control
+trigger:
+  - platform: time
+    at: '18:00:00'
+condition: []
+action:
+  - service: number.set_value
+    target:
+      entity_id: number.fmb_import_threshold
+    data:
+      value: -11000
+  - service: number.set_value
+    target:
+      entity_id: number.fmb_export_threshold
+    data:
+      value: 11000
+mode: single
+```
 
 ---
 

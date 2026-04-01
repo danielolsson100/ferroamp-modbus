@@ -61,6 +61,8 @@ class FerroampModbusSensor(FerroampModbusEntity, SensorEntity):
         raw = self.coordinator.data.get(self._defn.key)
         if raw is None:
             return None
+        if self._defn.as_int:
+            return int(round(float(raw)))
         # Round floats to 3 decimal places for clean display
         if isinstance(raw, float):
             return round(raw, 3)
