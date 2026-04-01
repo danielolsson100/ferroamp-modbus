@@ -109,6 +109,8 @@ A Home Assistant custom integration for the **Ferroamp Energy Hub** using Modbus
 
 Use a Home Assistant automation to set import/export values with the number entities:
 
+> **Control note:** Do not mix Modbus and MQTT for battery control — that is the way to the dark side. Prefer MQTT only for sensor data and use Modbus for battery control.
+
 ```yaml
 alias: Set Ferroamp Import/Export Thresholds
 description: Set import/export thresholds for battery and PV control
