@@ -622,10 +622,10 @@ SENSOR_DEFINITIONS: list[SensorDefinition] = [
         state_class=SensorStateClass.MEASUREMENT,
     ),
 
-    # --- Load / Consumption ---
+    # --- Facility Load (spec section 6.4) ---
     SensorDefinition(
-        key="load_energy_produced",
-        name="Load Energy Produced",
+        key="load_production_energy",
+        name="Load Production Energy",
         address=4064,
         input_type=REG_INPUT,
         data_type=DTYPE_FLOAT32,
@@ -634,8 +634,8 @@ SENSOR_DEFINITIONS: list[SensorDefinition] = [
         state_class=SensorStateClass.TOTAL_INCREASING,
     ),
     SensorDefinition(
-        key="load_energy_consumed",
-        name="Load Energy Consumed",
+        key="load_consumption_energy",
+        name="Load Consumption Energy",
         address=4068,
         input_type=REG_INPUT,
         data_type=DTYPE_FLOAT32,
@@ -644,8 +644,8 @@ SENSOR_DEFINITIONS: list[SensorDefinition] = [
         state_class=SensorStateClass.TOTAL_INCREASING,
     ),
     SensorDefinition(
-        key="consumption_power",
-        name="Consumption Power",
+        key="load_active_power",
+        name="Load Active Power",
         address=4100,
         input_type=REG_INPUT,
         data_type=DTYPE_FLOAT32,
@@ -654,8 +654,8 @@ SENSOR_DEFINITIONS: list[SensorDefinition] = [
         state_class=SensorStateClass.MEASUREMENT,
     ),
     SensorDefinition(
-        key="consumption_reactive_power",
-        name="Consumption Reactive Power",
+        key="load_reactive_power",
+        name="Load Reactive Power",
         address=4104,
         input_type=REG_INPUT,
         data_type=DTYPE_FLOAT32,
@@ -664,8 +664,8 @@ SENSOR_DEFINITIONS: list[SensorDefinition] = [
         state_class=SensorStateClass.MEASUREMENT,
     ),
     SensorDefinition(
-        key="consumption_active_current_l1",
-        name="Consumption Active Current L1",
+        key="load_active_current_l1",
+        name="Load Active Current L1",
         address=4112,
         input_type=REG_INPUT,
         data_type=DTYPE_FLOAT32,
@@ -674,8 +674,8 @@ SENSOR_DEFINITIONS: list[SensorDefinition] = [
         state_class=SensorStateClass.MEASUREMENT,
     ),
     SensorDefinition(
-        key="consumption_active_current_l2",
-        name="Consumption Active Current L2",
+        key="load_active_current_l2",
+        name="Load Active Current L2",
         address=4116,
         input_type=REG_INPUT,
         data_type=DTYPE_FLOAT32,
@@ -684,8 +684,8 @@ SENSOR_DEFINITIONS: list[SensorDefinition] = [
         state_class=SensorStateClass.MEASUREMENT,
     ),
     SensorDefinition(
-        key="consumption_active_current_l3",
-        name="Consumption Active Current L3",
+        key="load_active_current_l3",
+        name="Load Active Current L3",
         address=4120,
         input_type=REG_INPUT,
         data_type=DTYPE_FLOAT32,
@@ -694,8 +694,8 @@ SENSOR_DEFINITIONS: list[SensorDefinition] = [
         state_class=SensorStateClass.MEASUREMENT,
     ),
     SensorDefinition(
-        key="consumption_reactive_current_l1",
-        name="Consumption Reactive Current L1",
+        key="load_reactive_current_l1",
+        name="Load Reactive Current L1",
         address=4124,
         input_type=REG_INPUT,
         data_type=DTYPE_FLOAT32,
@@ -704,8 +704,8 @@ SENSOR_DEFINITIONS: list[SensorDefinition] = [
         state_class=SensorStateClass.MEASUREMENT,
     ),
     SensorDefinition(
-        key="consumption_reactive_current_l2",
-        name="Consumption Reactive Current L2",
+        key="load_reactive_current_l2",
+        name="Load Reactive Current L2",
         address=4128,
         input_type=REG_INPUT,
         data_type=DTYPE_FLOAT32,
@@ -714,8 +714,8 @@ SENSOR_DEFINITIONS: list[SensorDefinition] = [
         state_class=SensorStateClass.MEASUREMENT,
     ),
     SensorDefinition(
-        key="consumption_reactive_current_l3",
-        name="Consumption Reactive Current L3",
+        key="load_reactive_current_l3",
+        name="Load Reactive Current L3",
         address=4132,
         input_type=REG_INPUT,
         data_type=DTYPE_FLOAT32,
@@ -724,7 +724,7 @@ SENSOR_DEFINITIONS: list[SensorDefinition] = [
         state_class=SensorStateClass.MEASUREMENT,
     ),
 
-    # --- DC Link ---
+    # --- DC Link (undocumented, verified against cloud API) ---
     SensorDefinition(
         key="dc_link_voltage",
         name="DC Link Voltage",
